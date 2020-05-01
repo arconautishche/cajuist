@@ -37,6 +37,12 @@ class Timesheet(object):
     def find_entry_by(self, workorder, activity, description):
         pass
 
+    def save(self):
+        #SAVE_BTN_SELECTOR = '#b\\$tblsysSave'
+        #save_btn = browser.find_element_by_css_selector(SAVE_BTN_SELECTOR)
+        #save_btn.click()
+        pass
+
     ### PRIVATE ###
     def __switch_to_ts_frame(self):
         # CAMIS looooves iframes...
