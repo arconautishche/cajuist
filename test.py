@@ -1,41 +1,47 @@
 import os
+import time
+
 from dotenv import load_dotenv
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support.ui import WebDriverWait
+
 load_dotenv()
 login = os.getenv('LOGIN')
 pwd = os.getenv('PASSWORD')
 
-from selenium import webdriver
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
 
 browser = webdriver.Chrome('C:\\Users\\antoniar\\Documents\\Code\\cajuist\\selenium_drivers\\chromedriver.exe')
 browser.get(f'https://{login}:{pwd}@camis.cegeka.com/agresso')
 browser.implicitly_wait(2)
 
-# CAMIS looooves iframes...
-WebDriverWait(browser, 30).until(
-    EC.frame_to_be_available_and_switch_to_it((By.CSS_SELECTOR, 'iframe'))
-)
-
-WebDriverWait(browser, 30).until(
-    EC.frame_to_be_available_and_switch_to_it((By.CSS_SELECTOR, 'frame'))
-)
-
-def new_ts_entry():
-    ADD_BTN_SELECTOR = '#b_s89_g89s90_buttons__newButton'
-    add_btn = browser.find_element_by_css_selector(ADD_BTN_SELECTOR)
-    add_btn.click()
+from ts_row import TimesheetEntryRow as row
 
 new_ts_entry()
-new_ts_entry()
 
-TS_TABLE_SELECTOR = '#b_s89_g89s90'
-ts_table = browser.find_element_by_css_selector(TS_TABLE_SELECTOR)
-ts_rows = ts_table.find_elements_by_xpath('tbody/tr')[:-2]
+workorder_input = row.get_last(browser).find_element_by_xpath('td[6]//tbody/tr[1]/td[1]//input[1]')
+workorder_input.send_keys('PZ--001.001')
+workorder_input.send_keys(Keys.TAB)
+time.sleep(1)
 
-for row in ts_rows:
-    row.screenshot(f'ts_row_{row.get_attribute("id")}_before.png')
+activity_input = row.get_last(browser).find_element_by_xpath('td[7]//tbody/tr[1]/td[1]//input[1]')
+
+descr_input = row.get_last(browser).find_element_by_xpath('td[8]//tbody/tr[1]/td[1]//input[1]')
+descr_input.clear()
+descr_input.send_keys('Scrum')
+descr_input.send_keys(Keys.TAB)
+time.sleep(1)
+
+mo_input = row.get_last().find_element_by_xpath('td[11]//tbody/tr[1]/td[1]//input[1]')
+mo_input.click()
+mo_input.send_keys('0.5')
+mo_input.send_keys(Keys.TAB)
+time.sleep(1)
+
+SAVE_BTN_SELECTOR = '#b\\$tblsysSave'
+save_btn = browser.find_element_by_css_selector(SAVE_BTN_SELECTOR)
+save_btn.click()
 
 browser.quit()
-
