@@ -41,6 +41,10 @@ class Entry:
     def set_description(self, description: str):
         self.__set_entry_attribute(Entry.DESCRIPTION_INPUT, description)
 
+    def set_hours(self, day, hours):
+        DAY_INPUT = (By.XPATH, f'td[{day+10}]{Entry.XPATH_TO_INPUT}')
+        self.__set_entry_hours(DAY_INPUT, hours)
+
     @staticmethod
     def get_all_entries(browser: WebDriver):
         container = Entry.__container(browser)
@@ -68,8 +72,19 @@ class Entry:
         return attribute.get_attribute('value')
 
     def __set_entry_attribute(self, selector: tuple, value: str):
-        attribute = self.__fresh().find_element(*selector)
-        attribute.clear()
-        attribute.send_keys(value)
-        attribute.send_keys(Keys.TAB)
+        attribute_input = self.__fresh().find_element(*selector)
+        attribute_input.clear()
+        attribute_input.send_keys(value)
+        attribute_input.send_keys(Keys.TAB)
+        time.sleep(1)
+
+    def __set_entry_hours(self, selector: tuple, value: str):
+        hour_input = self.__fresh().find_element(*selector)
+        hour_input.click()
+        
+        hour_input.send_keys(Keys.CONTROL + 'a')
+        hour_input.send_keys(Keys.DELETE)
+
+        hour_input.send_keys(value)
+        hour_input.send_keys(Keys.TAB)
         time.sleep(1)
