@@ -27,5 +27,10 @@ new_entry.set_hours(4, '0.25')
 import datetime
 today = datetime.date.today().weekday()
 
+new_entry = ts.add_new_entry()
+new_entry.set_workorder('PZ--001.001')
+new_entry.set_description('Scrum')
+new_entry.set_hours(today + 1, '0.42')
+
 print(new_entry.get_description())
 
