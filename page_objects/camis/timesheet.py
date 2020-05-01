@@ -6,9 +6,9 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 
-class Timesheet:
-    
+from page_objects.camis.entry import Entry
 
+class Timesheet(object):
     def __init__(self):
         load_dotenv()
         login = os.getenv('LOGIN')
@@ -27,6 +27,9 @@ class Timesheet:
         ADD_BTN_SELECTOR = '#b_s89_g89s90_buttons__newButton'
         add_btn = self.browser.find_element_by_css_selector(ADD_BTN_SELECTOR)
         add_btn.click()
+
+        new_entry = Entry.get_all_entries(self.browser)[-1]
+        return new_entry
 
     def all_entries(self):
         pass
