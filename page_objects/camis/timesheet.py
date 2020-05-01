@@ -32,7 +32,7 @@ class Timesheet(object):
         return new_entry
 
     def all_entries(self):
-        pass
+        return Entry.get_all_entries(self.browser)
 
     def find_entry_by(self, workorder, activity, description):
         pass
