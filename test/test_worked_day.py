@@ -17,7 +17,7 @@ class TestWorkedDay(unittest.TestCase):
         self.assertEqual(day.tasks[1].duration, 1)
         self.assertEqual(day.tasks[2].duration, 5)
 
-    def test_hours_normalization_two(self):
+    def test_hours_normalization_with_total_duration(self):
         tasks = [
             Task('PZ--102.102', 'AP', 'SVF-3798', self.__get_hours('00:15:58')),
             Task('PA--300.001', 'AP', 'SVF-9940', self.__get_hours('00:46:10')),
