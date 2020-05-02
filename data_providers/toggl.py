@@ -41,7 +41,7 @@ def __load_projects():
         )
 
     for proj in r.json():
-        projects[proj['id']] = re.search(r'.*\d', proj['name']).group(0)
+        projects[proj['id']] = re.search(r'.*\d', proj['name']).group(0)  # TODO: move this logic to model.worked_day.Task?
 
 def __tasks_from_toggl_entries(toggl_time_entries_json):
     tasks = []
@@ -62,7 +62,7 @@ def __tasks_from_toggl_entries(toggl_time_entries_json):
 
 def __extract_description(toggle_entry):
     raw_description = toggle_entry['description']
-    svf_num = re.search(r'SVF-[\d]{4,}', raw_description)
+    svf_num = re.search(r'SVF-[\d]{4,}', raw_description) # TODO: move this logic to model.worked_day.Task?
     if svf_num is not None:
         return svf_num.group(0)
 
