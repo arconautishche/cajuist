@@ -1,8 +1,8 @@
-class Task:
-    def __init__(self, workorder, activity, description, duration):
+class WorkedTask:
+    def __init__(self, workorder, activity, description, hours):
         self.workorder = workorder
         self.description = description
-        self.duration = duration
+        self.hours = hours
 
         if activity is None:
             self.activity = ''
@@ -15,7 +15,7 @@ class WorkedDay:
 
     def normalize_hours(self):
         for task in self.tasks:
-            task.duration = round(task.duration * 4) / 4
+            task.hours = round(task.hours * 4) / 4
 
     def total_hours(self):
-        return sum(task.duration for task in self.tasks)
+        return sum(task.hours for task in self.tasks)

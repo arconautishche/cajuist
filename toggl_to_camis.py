@@ -16,12 +16,12 @@ for task in reported_tasks.tasks:
     matching_entry = ts.find_entry_by(task.workorder, task.activity, task.description)
     if matching_entry:
         matching_entry.select()
-        matching_entry.set_hours(day_of_week, task.duration)
+        matching_entry.set_hours(day_of_week, task.hours)
     else:
         new_entry = ts.add_new_entry()
         new_entry.set_workorder(task.workorder)
         new_entry.set_activity(task.activity)
         new_entry.set_description(task.description)
-        new_entry.set_hours(day_of_week, task.duration)
+        new_entry.set_hours(day_of_week, task.hours)
 
 print('FIN')
