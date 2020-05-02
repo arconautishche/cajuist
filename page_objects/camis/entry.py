@@ -1,11 +1,13 @@
 import time
 
-from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.remote.webdriver import WebDriver
 from selenium.webdriver.remote.webelement import WebElement
 
 class Entry:
+    '''
+    Allows interacting with a single Timesheet Entry row
+    '''
     TIMECODE_INDEX = 5
     WORKORDER_INDEX = 6
     ACTIVITY_INDEX = 7
