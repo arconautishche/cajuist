@@ -12,6 +12,7 @@ print(reported_tasks.total_hours())
 
 ts = Timesheet()
 for task in reported_tasks.tasks:
+    print(task.description)
     matching_entry = ts.find_entry_by(task.workorder, task.activity, task.description)
     if matching_entry:
         matching_entry.select()
