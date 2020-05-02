@@ -35,7 +35,7 @@ class Timesheet(object):
     def all_entries(self):
         return Entry.get_all_entries(self.browser)
 
-    def find_entry_by(self, workorder, activity, description):
+    def find_entry_by(self, workorder: str, activity: str, description: str):
         all_entries = Entry.get_all_entries(self.browser)
         for entry in all_entries:
             if entry.get_workorder() == workorder:
