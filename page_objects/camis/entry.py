@@ -104,6 +104,6 @@ class Entry:
         hour_input.send_keys(Keys.CONTROL + 'a')
         hour_input.send_keys(Keys.DELETE)
 
-        hour_input.send_keys(value)
+        hour_input.send_keys(str(value))
         hour_input.send_keys(Keys.TAB)
         time.sleep(1)
