@@ -24,8 +24,8 @@ class Timesheet(object):
         self.browser.quit()
 
     def add_new_entry(self):
-        ADD_BTN_SELECTOR = '#b_s89_g89s90_buttons__newButton'
-        add_btn = self.browser.find_element_by_css_selector(ADD_BTN_SELECTOR)
+        add_btn_selector = '#b_s89_g89s90_buttons__newButton'
+        add_btn = self.browser.find_element_by_css_selector(add_btn_selector)
         add_btn.click()
 
         new_entry = Entry.get_all_entries(self.browser)[-1]
@@ -35,7 +35,14 @@ class Timesheet(object):
         return Entry.get_all_entries(self.browser)
 
     def find_entry_by(self, workorder, activity, description):
-        pass
+        all_entries = Entry.get_all_entries(self.browser)
+        for entry in all_entries:
+            if entry.get_workorder() == workorder:
+                if  entry.get_description() == description:
+                    if entry.get_activity() == activity:
+                        return entry
+
+        return None
 
     def save(self):
         #SAVE_BTN_SELECTOR = '#b\\$tblsysSave'
