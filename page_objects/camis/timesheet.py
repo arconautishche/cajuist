@@ -26,6 +26,7 @@ class Timesheet(object):
     def add_new_entry(self):
         add_btn_selector = '#b_s89_g89s90_buttons__newButton'
         add_btn = self.browser.find_element_by_css_selector(add_btn_selector)
+        self.browser.execute_script("arguments[0].scrollIntoView();", add_btn)
         add_btn.click()
 
         new_entry = Entry.get_all_entries(self.browser)[-1]
