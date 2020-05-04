@@ -20,8 +20,13 @@ class TestWorkedTask(unittest.TestCase):
         task_w_dot = WorkedTask('PZ--001.001', '', 'SVF-1234. Work', 0.5)
         self.assertEqual(task_w_dot.description, 'SVF-1234')
 
-        task_clean = WorkedTask('PZ--102.102', '', 'SVF-1234', 0.5)
-        self.assertEqual(task_clean.description, 'SVF-1234')
+        task_clean = WorkedTask('PZ--102.102', '', 'SVF-12345', 0.5)
+        self.assertEqual(task_clean.description, 'SVF-12345')
+
+    def test_description_with_svf8776_untouched(self):
+        untouchable_descr = 'SVF-8776. Een fonds'
+        task = WorkedTask('PZ--118.102', '', untouchable_descr, 1)
+        self.assertEqual(task.description, untouchable_descr)
 
 if __name__ == '__main__':
     unittest.main()

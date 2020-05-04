@@ -11,6 +11,15 @@ class WorkedTask:
         return re.search(r'.*\d', text).group(0)
 
     def __process_description(self, text: str):
+        untouchable_patterns = [
+            r'SVF-8776',
+            r'SVF-9402'
+        ]
+
+        is_untouchable = any(p for p in untouchable_patterns if re.search(p, text))
+        if is_untouchable:
+            return text
+
         svf_num = re.search(r'SVF-[\d]{4,}', text)
         if svf_num is not None:
             return svf_num.group(0)
