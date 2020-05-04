@@ -88,6 +88,9 @@ class Entry:
             attribute = self.__find_text(cell_index)
             return attribute.text
         except:
+            if self.__is_cell_empty(cell_index):
+                return ''
+
             attribute = self.__find_input(cell_index)
             return attribute.get_attribute('value')
 
@@ -109,3 +112,11 @@ class Entry:
         hour_input.send_keys(str(value))
         hour_input.send_keys(Keys.TAB)
         time.sleep(1)
+
+    def __is_cell_empty(self, cell_index: int):
+        xpath = f'td[{cell_index}][not(*)]'
+        try:
+            self.__fresh().find_element_by_xpath(xpath)
+            return True
+        except:
+            return False
