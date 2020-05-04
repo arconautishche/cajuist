@@ -43,7 +43,9 @@ class Entry:
         self.__set_entry_hours(day+10, hours)
 
     def select(self):
-        self.__fresh().click()
+        refreshed_elem = self.__fresh()
+        self.browser.execute_script("arguments[0].scrollIntoView();", refreshed_elem) # sometimes the row may be out of view
+        refreshed_elem.click()
         time.sleep(1)
 
     @staticmethod
