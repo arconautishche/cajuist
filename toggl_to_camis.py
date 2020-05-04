@@ -13,15 +13,15 @@ print(reported_tasks.total_hours())
 ts = Timesheet()
 for task in reported_tasks.tasks:
     print(task.description)
-    matching_entry = ts.find_entry_by(task.workorder, task.activity, task.description)
-    if matching_entry:
-        matching_entry.select()
-        matching_entry.set_hours(day_of_week, task.hours)
+    entry = ts.find_entry_by(task.workorder, task.activity, task.description)
+    if entry:
+        entry.select()
     else:
-        new_entry = ts.add_new_entry()
-        new_entry.set_workorder(task.workorder)
-        new_entry.set_activity(task.activity)
-        new_entry.set_description(task.description)
-        new_entry.set_hours(day_of_week, task.hours)
+        entry = ts.add_new_entry()
+        entry.set_workorder(task.workorder)
+        entry.set_activity(task.activity)
+        entry.set_description(task.description)
+
+    entry.set_hours(day_of_week, task.hours)
 
 print('FIN')

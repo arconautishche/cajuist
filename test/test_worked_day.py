@@ -17,7 +17,7 @@ class TestWorkedDay(unittest.TestCase):
         self.assertEqual(day.tasks[1].hours, 1)
         self.assertEqual(day.tasks[2].hours, 5)
 
-    def test_hours_normalization_with_total_duration(self):
+    def test_total_duration_after_normalization(self):
         tasks = [
             WorkedTask('PZ--102.102', 'AP', 'SVF-3798', self.__get_hours('00:15:58')),
             WorkedTask('PA--300.001', 'AP', 'SVF-9940', self.__get_hours('00:46:10')),
@@ -32,9 +32,6 @@ class TestWorkedDay(unittest.TestCase):
         day = WorkedDay(tasks)
         day.normalize_hours()
 
-        self.assertEqual(day.tasks[0].hours, 0.25)
-        self.assertEqual(day.tasks[1].hours, 0.75)
-        self.assertEqual(day.tasks[2].hours, 1.75)
         self.assertEqual(day.total_hours(), 8)
 
     def __get_hours(self, timestring: str):
