@@ -18,6 +18,7 @@ class TestWorkedTask(unittest.TestCase):
 
     def test_description_with_svf8776_untouched(self):
         ventouris_processor = VentourisProcessor()
+        untouchable_descr = 'SVF-8776. Fonds'
         self.assertEqual(ventouris_processor.process_description(untouchable_descr), untouchable_descr)
 
     def test_description_with_usd_gets_trimmed(self):
