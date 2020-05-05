@@ -46,15 +46,17 @@ def __load_projects():
 def __tasks_from_toggl_entries(toggl_time_entries_json):
     tasks = []
     for toggl_entry in toggl_time_entries_json:
-        workorder = __extract_workorder(toggl_entry)
-        activity = __extract_activity(toggl_entry)
-        description = __extract_description(toggl_entry)
-        duration = __extract_duration(toggl_entry)
+        new_task = dict(
+            workorder = __extract_workorder(toggl_entry),
+            activity = __extract_activity(toggl_entry),
+            description = __extract_description(toggl_entry),
+            hours = __extract_duration(toggl_entry)
+        )
 
-        new_task = WorkedTask(workorder, activity, description, duration)
+        #new_task = WorkedTask(workorder, activity, description, duration)
         matching_task = next((t for t in tasks if __matching_task(t, new_task)), None)
         if matching_task:
-            matching_task.hours += new_task.hours
+            matching_task['hours'] += new_task['hours']
         else:
             tasks.append(new_task)
 
@@ -76,9 +78,9 @@ def __extract_duration(toggle_entry):
     return toggle_entry['duration'] / 3600
 
 def __matching_task(task1, task2):
-    if task1.workorder == task2.workorder:
-        if task1.activity == task2.activity:
-            if task1.description == task2.description:
+    if task1['workorder'] == task2['workorder']:
+        if task1['activity'] == task2['activity']:
+            if task1['description'] == task2['description']:
                 return True
 
     return False

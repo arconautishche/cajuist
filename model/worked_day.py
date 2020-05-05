@@ -45,8 +45,10 @@ class WorkedTask:
         return hours
 
 class WorkedDay:
-    def __init__(self, tasks: list):
-        self.tasks = tasks.copy()
+    def __init__(self, tasks: list, caption_processor: ICaptionProcessor = None):
+        self.tasks = list(
+            WorkedTask(t['workorder'], t['activity'], t['description'], t['hours'], caption_processor=caption_processor) for t in tasks
+        )
 
     def normalize_hours(self):
         for task in self.tasks:

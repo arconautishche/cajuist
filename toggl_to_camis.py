@@ -1,12 +1,13 @@
 from datetime import date
 from data_providers import toggl
 from model.worked_day import WorkedDay
+from model.ventouris_processor import VentourisProcessor
 from page_objects.camis.timesheet import Timesheet
 
 target_date = date.today()
 day_of_week = target_date.weekday() + 1
 
-reported_tasks = WorkedDay(toggl.load_time_entries(target_date))
+reported_tasks = WorkedDay(toggl.load_time_entries(target_date), caption_processor=VentourisProcessor())
 reported_tasks.normalize_hours()
 print(reported_tasks.total_hours())
 
