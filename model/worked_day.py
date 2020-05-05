@@ -1,38 +1,47 @@
 import re
 
+class ICaptionProcessor:
+    def process_workorder(self, text: str) -> str:
+        pass
+
+    def process_activity(self, text: str) -> str:
+        pass
+
+    def process_description(self, text: str) -> str:
+        pass
+
 class WorkedTask:
-    def __init__(self, workorder: str, activity: str, description: str, hours: float):
+    def __init__(self, workorder: str, activity: str, description: str, hours: float, caption_processor: ICaptionProcessor = None):
+        self.processor = caption_processor
+
         self.workorder = self.__process_workorder(workorder)
         self.description = self.__process_description(description)
         self.hours = self.__process_hours(hours)
         self.activity = self.__process_activity(activity)
         
-    def __process_workorder(self, text: str):
-        return re.search(r'.*\d', text).group(0)
+    def __process_workorder(self, text: str) -> str:
+        if not self.processor:
+            return text
+        
+        return self.processor.process_workorder(text)
 
-    def __process_description(self, text: str):
-        untouchable_patterns = [
-            r'SVF-8776',
-            r'SVF-9402'
-        ]
+    def __process_description(self, text: str) -> str:
+        if not self.processor:
+            return text
+        
+        return self.processor.process_description(text)
 
-        is_untouchable = any(p for p in untouchable_patterns if re.search(p, text))
-        if is_untouchable:
+    def __process_activity(self, text: str) -> str:
+        if not self.processor:
             return text
 
-        svf_num = re.search(r'SVF-[\d]{4,}', text)
-        if svf_num is not None:
-            return svf_num.group(0)
-        else:
-            return text
-
-    def __process_activity(self, text: str):
-        if text is None:
+        activity = self.processor.process_activity(text)
+        if activity is None:
             return ''
         else:
-            return text
+            return activity
 
-    def __process_hours(self, hours: float):
+    def __process_hours(self, hours: float) -> float:
         return hours
 
 class WorkedDay:
