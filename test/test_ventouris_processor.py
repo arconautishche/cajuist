@@ -2,7 +2,7 @@ import unittest
 from model.worked_day import WorkedTask
 from model.ventouris_processor import VentourisProcessor
 
-class TestWorkedTask(unittest.TestCase):
+class TestVentourisProcessor(unittest.TestCase):
 
     def test_workorder_gets_trimmed(self):
         ventouris_processor = VentourisProcessor()
@@ -26,6 +26,11 @@ class TestWorkedTask(unittest.TestCase):
         self.assertEqual(ventouris_processor.process_description('USD5595745 - some work'), 'USD5595745')
         self.assertEqual(ventouris_processor.process_description('USD5595745. Work'), 'USD5595745')
         self.assertEqual(ventouris_processor.process_description('USD5595745'), 'USD5595745')
+
+    def test_activity_left_untouched(self):
+        ventouris_processor = VentourisProcessor()
+        self.assertEqual(ventouris_processor.process_activity('AP'), 'AP')
+        self.assertEqual(ventouris_processor.process_activity(''), '')
 
 if __name__ == '__main__':
     unittest.main()

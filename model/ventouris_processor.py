@@ -9,7 +9,7 @@ class VentourisProcessor(ICaptionProcessor):
         return wo_match.group(0)
 
     def process_activity(self, text: str) -> str:
-        pass
+        return text
 
     def process_description(self, text: str) -> str: 
         untouchable_patterns = [
