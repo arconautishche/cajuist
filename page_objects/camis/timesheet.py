@@ -14,6 +14,8 @@ class Timesheet(object):
         login = os.getenv('LOGIN')
         pwd = os.getenv('PASSWORD')
 
+        self.cache = {}
+
         self.browser = webdriver.Chrome('selenium_drivers\\chromedriver.exe')
         self.browser.get(f'https://{login}:{pwd}@camis.cegeka.com/agresso')
         self.browser.implicitly_wait(2)
@@ -33,17 +35,18 @@ class Timesheet(object):
         return new_entry
 
     def all_entries(self):
-        return Entry.get_all_entries(self.browser)
+        entries = Entry.get_all_entries(self.browser)
+        self.__refresh_cache(entries)
+        return entries
 
-    def find_entry_by(self, workorder: str, activity: str, description: str):
-        all_entries = Entry.get_all_entries(self.browser)
-        for entry in all_entries:
-            if entry.get_workorder() == workorder:
-                if  entry.get_description() == description:
-                    if entry.get_activity() == activity:
-                        return entry
+    def find_entry_by(self, workorder: str, activity: str, description: str) -> Entry:
+        from_cache = self.__get_entry_from_cache(workorder, activity, description)
+        if from_cache is None:
+            all_entries = Entry.get_all_entries(self.browser)
+            self.__refresh_cache(all_entries)        
+            from_cache = self.__get_entry_from_cache(workorder, activity, description)
 
-        return None
+        return from_cache
 
     def save(self):
         #SAVE_BTN_SELECTOR = '#b\\$tblsysSave'
@@ -61,3 +64,28 @@ class Timesheet(object):
         WebDriverWait(self.browser, 30).until(
             EC.frame_to_be_available_and_switch_to_it((By.CSS_SELECTOR, 'frame'))
         )
+
+    def __refresh_cache(self, entries):
+        print('Refreshing the cache...')
+        all_ids = list(e.entry_id for e in self.cache.values())
+        for entry in entries:
+            if entry.entry_id not in all_ids:
+                self.__add_entry_to_cache(entry)
+
+    def __add_entry_to_cache(self, entry: Entry):
+        entry_attributes = (
+            entry.get_workorder(), 
+            entry.get_activity(), 
+            entry.get_description()
+        )
+        self.cache[entry_attributes] = entry
+
+    def __get_entry_from_cache(self, workorder: str, activity: str, description: str) -> Entry:
+        if not self.cache:
+            return None
+
+        entry_attributes = (workorder, activity, description)
+        if entry_attributes in self.cache.keys():
+            return self.cache[entry_attributes]
+
+        return None

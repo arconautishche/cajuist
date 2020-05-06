@@ -13,16 +13,19 @@ print(reported_tasks.total_hours())
 
 ts = Timesheet()
 for task in reported_tasks.tasks:
-    print(task.description)
+    print(f'Looking for {task.description}...')
     entry = ts.find_entry_by(task.workorder, task.activity, task.description)
     if entry:
+        print('\tFound a matching entry')
         entry.select()
     else:
+        print('\tCreate a new entry')
         entry = ts.add_new_entry()
         entry.set_workorder(task.workorder)
         entry.set_activity(task.activity)
         entry.set_description(task.description)
 
+    print('\tSetting hours')
     entry.set_hours(day_of_week, task.hours)
 
 print('FIN')
