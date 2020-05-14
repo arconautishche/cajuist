@@ -5,7 +5,11 @@ from model.spent_time_records import ICaptionProcessor
 
 class VentourisProcessor(ICaptionProcessor):
     def process_workorder(self, text: str) -> str:
-        wo_match = re.search(r'.*\d', text)
+        valid_wo_pattern = r'.*\d'
+        wo_match = re.search(valid_wo_pattern, text)
+        if wo_match is None:
+            raise Exception(f'Workorder is not in a supported format, should match {valid_wo_pattern}')
+        
         return wo_match.group(0)
 
     def process_activity(self, text: str) -> str:

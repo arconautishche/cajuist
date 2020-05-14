@@ -31,5 +31,10 @@ class TestVentourisProcessor(unittest.TestCase):
         self.assertEqual(ventouris_processor.process_activity('AP'), 'AP')
         self.assertEqual(ventouris_processor.process_activity(''), '')
 
+    def test_workorder_must_match_pattern(self):
+        ventouris_processor = VentourisProcessor()
+        with self.assertRaises(Exception):
+            ventouris_processor.process_workorder('An invalid workorder')
+
 if __name__ == '__main__':
     unittest.main()
