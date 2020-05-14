@@ -6,10 +6,12 @@ from page_objects.camis.timesheet import Timesheet
 
 target_date = date.today()
 day_of_week = target_date.weekday() + 1
+print('=' * 20)
+print(f'The date is {target_date}')
 
 reported_tasks = WorkedDay(toggl.load_time_entries(target_date), caption_processor=VentourisProcessor())
 reported_tasks.normalize_hours()
-print(reported_tasks.total_hours())
+print(f'∑ Total registered hours: {reported_tasks.total_hours()}\n')
 
 ts = Timesheet()
 for task in reported_tasks.tasks:

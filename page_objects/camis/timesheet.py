@@ -10,6 +10,8 @@ from page_objects.camis.entry import Entry
 
 class Timesheet(object):
     def __init__(self):
+        print('-- 🐢 OPENING UP CAMIS 🐢 --')
+
         load_dotenv()
         login = os.getenv('LOGIN')
         pwd = os.getenv('PASSWORD')

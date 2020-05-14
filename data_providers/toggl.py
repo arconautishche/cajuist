@@ -12,6 +12,7 @@ api_token = os.getenv('TOGGL_TOKEN')
 projects = {}
 
 def load_time_entries(entries_day: date):
+    print('-- ⏲ IMPORTING FROM TOGGL ⏲ --')
     start_of_day = datetime.combine(entries_day, time(), tzinfo=timezone.utc)
     end_of_day = start_of_day + timedelta(hours=23)
 
