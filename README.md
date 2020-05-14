@@ -3,7 +3,7 @@
 
 This code can auto-fill your Cegeka CAMIS timesheets based on data provided from another, more usable, source.
 
-## Currently available integration:
+## Currently available integrations:
 - Toggl
 
 [See more details on usage](data_providers/README.md)
@@ -38,7 +38,7 @@ You can use an existing script or write your own that will perform the simple 3 
 ### Working example 
 An example of such a script is [toggl_to_camis.py](toggl_to_camis.py), which performs those three steps for a specific case:
 1. Imports all entries from Toggl for today
-2. Workorders and task descriptions are trimmed to what's typical at the Ventouris team
+2. Workorders and task descriptions are trimmed to what's typical at the Ventouris team (using [Ventouris processor](model/ventouris_processor.py))
 3. Fill out CAMIS by 
     - reuses lines completely matching Workorder + Activity + Description
     - adds new lines otherwise
