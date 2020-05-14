@@ -1,5 +1,5 @@
 import unittest
-from model.worked_day import WorkedTask, ICaptionProcessor
+from model.spent_time_records import WorkedTask, ICaptionProcessor
 
 class DummyCaptionProcessor(ICaptionProcessor):
     def process_workorder(self, text: str) -> str:

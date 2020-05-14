@@ -1,7 +1,7 @@
 import re
 from typing import Tuple
 
-from model.worked_day import ICaptionProcessor
+from model.spent_time_records import ICaptionProcessor
 
 class VentourisProcessor(ICaptionProcessor):
     def process_workorder(self, text: str) -> str:

@@ -1,6 +1,6 @@
 from datetime import date
 from data_providers import toggl
-from model.worked_day import WorkedDay
+from model.spent_time_records import WorkedDay
 from model.ventouris_processor import VentourisProcessor
 from page_objects.camis.timesheet import Timesheet
 

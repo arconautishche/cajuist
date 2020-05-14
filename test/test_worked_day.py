@@ -1,5 +1,5 @@
 import unittest
-from model.worked_day import WorkedDay, WorkedTask
+from model.spent_time_records import WorkedDay, WorkedTask
 
 class TestWorkedDay(unittest.TestCase):
 

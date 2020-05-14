@@ -1,5 +1,4 @@
 import unittest
-from model.worked_day import WorkedTask
 from model.ventouris_processor import VentourisProcessor
 
 class TestVentourisProcessor(unittest.TestCase):
