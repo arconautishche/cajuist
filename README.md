@@ -43,4 +43,6 @@ An example of such a script is [toggl_to_camis.py](toggl_to_camis.py), which per
     - reuses lines completely matching Workorder + Activity + Description
     - adds new lines otherwise
 
+    IT DOESN'T SAVE THOUGH (too much of an 'alpha' version to save automatically yet)
+
 
