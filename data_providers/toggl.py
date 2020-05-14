@@ -6,8 +6,6 @@ from datetime import date, datetime, time, timedelta, timezone
 import requests
 from dotenv import load_dotenv
 
-from model.worked_day import WorkedTask
-
 load_dotenv()
 api_token = os.getenv('TOGGL_TOKEN')
 
@@ -53,7 +51,6 @@ def __tasks_from_toggl_entries(toggl_time_entries_json):
             hours = __extract_duration(toggl_entry)
         )
 
-        #new_task = WorkedTask(workorder, activity, description, duration)
         matching_task = next((t for t in tasks if __matching_task(t, new_task)), None)
         if matching_task:
             matching_task['hours'] += new_task['hours']
