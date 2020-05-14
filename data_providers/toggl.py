@@ -1,6 +1,5 @@
 import json
 import os
-import re
 from datetime import date, datetime, time, timedelta, timezone
 
 import requests
