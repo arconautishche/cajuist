@@ -6,7 +6,7 @@ from page_objects.camis.timesheet import Timesheet
 
 target_date = date.today()
 day_of_week = target_date.weekday() + 1
-print('=' * 20)
+print('=' * 50)
 print(f'The date is {target_date}')
 
 reported_tasks = WorkedDay(toggl.load_time_entries(target_date), caption_processor=VentourisProcessor())
@@ -30,4 +30,7 @@ for task in reported_tasks.tasks:
     print('\tSetting hours')
     entry.set_hours(day_of_week, task.hours)
 
-print('FIN')
+print('=' * 50)
+print('Done! Check if everything is ok and then Save')
+input('Press any key to exit...')
+quit(0)
