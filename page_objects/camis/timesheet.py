@@ -13,8 +13,8 @@ class Timesheet(object):
         print('-- 🐢 OPENING UP CAMIS 🐢 --')
 
         load_dotenv()
-        login = os.getenv('LOGIN')
-        pwd = os.getenv('PASSWORD')
+        login = os.getenv('CAMIS_LOGIN')
+        pwd = os.getenv('CAMIS_PASSWORD')
 
         self.browser = webdriver.Chrome('selenium_drivers\\chromedriver.exe')
         self.browser.get(f'https://{login}:{pwd}@camis.cegeka.com/agresso')
