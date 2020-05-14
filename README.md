@@ -21,12 +21,12 @@ You can use an existing script or write your own that will perform the simple 3 
 - Have Python 3.8+ installed
 - Clone this project locally
 - Switch to the .venv virtual environment. Run:
-    ``` PowerShell
+    ``` shell
     > .venv/Scripts/Activate.ps1
     ```
 - Import the modules from requirements.txt. Run:
-    ``` python
-    pip install -r requirements.txt
+    ``` shell
+    > pip install -r requirements.txt
     ```
 - Create a file called .env and put your CAMIS credentials in there, like this:
     ```
