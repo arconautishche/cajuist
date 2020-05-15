@@ -33,13 +33,13 @@ You can use an existing script or write your own that will perform the simple 3 
     CAMIS_LOGIN='your_cegeka_AD_login'
     CAMIS_PASSWORD='your_very_secret_password'
     ```
-- Write your own script or use 
+- Write your own script or use an existing one if it matches your needs
 
 ### Working example 
 An example of such a script is [toggl_to_camis.py](toggl_to_camis.py), which performs those three steps for a specific case:
 1. Imports all entries from Toggl for today
-2. Workorders and task descriptions are trimmed to what's typical at the Ventouris team (using [Ventouris processor](model/ventouris_processor.py))
-3. Fill out CAMIS by 
+2. Trims workorders and task descriptions to what's typical at the Ventouris team (using [Ventouris processor](model/ventouris_processor.py))
+3. Fills out CAMIS for today:
     - reuses lines completely matching Workorder + Activity + Description
     - adds new lines otherwise
 
