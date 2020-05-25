@@ -5,13 +5,16 @@ from datetime import date, datetime, time, timedelta, timezone
 import requests
 from dotenv import load_dotenv
 
+import logging
+logger = logging.getLogger(__name__)
+
 load_dotenv()
 api_token = os.getenv('TOGGL_TOKEN')
 
 projects = {}
 
 def load_time_entries(entries_day: date):
-    print('-- ⏲ IMPORTING FROM TOGGL ⏲ --')
+    logger.info('-- ⏲  IMPORTING FROM TOGGL ⏲ --')
     start_of_day = datetime.combine(entries_day, time(), tzinfo=timezone.utc)
     end_of_day = start_of_day + timedelta(hours=23)
 
