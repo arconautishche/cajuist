@@ -1,5 +1,6 @@
 from datetime import date
 
+import util
 from data_providers import csv_example as csv
 from model.spent_time_records import WorkedDay
 from model.ventouris_processor import VentourisProcessor
@@ -14,24 +15,9 @@ day_report = WorkedDay(csv.read_entries(), caption_processor=VentourisProcessor(
 print(f'∑ Total registered hours: {day_report.total_hours()}\n')
 
 ts = Timesheet()
-for task in day_report.tasks:
-    print(f'Looking for {task.description}...')
-    entry = ts.find_entry_by(task.workorder, task.activity, task.description)
-    if entry:
-        print('\tFound a matching entry')
-        entry.select()
-    else:
-        print('\tCreate a new entry')
-        entry = ts.add_new_entry()
-        entry.set_workorder(task.workorder)
-        entry.set_activity(task.activity)
-        entry.set_description(task.description)
-
-    print('\tSetting hours')
-    entry.set_hours(day_of_week, task.hours)
+util.fill_camis(day_report, ts, day_of_week)
 
 print('=' * 50)
 print('Done! Check if everything is ok and then Save')
 input('Press any key to exit...')
 quit(0)
-
