@@ -18,7 +18,8 @@ class VentourisProcessor(ICaptionProcessor):
     def process_description(self, text: str) -> str: 
         untouchable_patterns = [
             r'SVF-8776',
-            r'SVF-9402'
+            r'SVF-9402',
+            r'SVF-7387'
         ]
         is_untouchable = any(p for p in untouchable_patterns if re.search(p, text))
         if is_untouchable:
