@@ -5,6 +5,7 @@ This code can auto-fill your Cegeka CAMIS timesheets based on data provided from
 
 ## Currently available integrations:
 - Toggl
+- CSV-file
 
 [See more details on usage](data_providers/README.md)
 
