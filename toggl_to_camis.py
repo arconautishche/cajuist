@@ -21,4 +21,6 @@ util.fill_camis(day_report, ts, day_of_week)
 print('=' * 50)
 print('Done! Check if everything is ok and then Save')
 input('Press any key to exit...')
+
+ts.close()
 quit(0)
