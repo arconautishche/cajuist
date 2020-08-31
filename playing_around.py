@@ -23,7 +23,7 @@ new_entry.set_workorder('PZ--001.001')
 new_entry.set_description('Scrum')
 new_entry.set_hours(5, '0.42')
 
-existing_entry = ts.find_entry_by('PZ--999.999', 'AP', 'SVF-9999')
+existing_entry = ts.find_draft_entry_by('PZ--999.999', 'AP', 'SVF-9999')
 if existing_entry is None:
     print("Couldn't find")
 else:

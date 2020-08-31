@@ -1,5 +1,4 @@
 import re
-from typing import Tuple
 
 from model.spent_time_records import ICaptionProcessor
 

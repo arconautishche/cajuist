@@ -4,7 +4,7 @@ from page_objects.camis.timesheet import Timesheet
 def fill_camis(day_report: WorkedDay, ts: Timesheet, day_of_week: int):
     for task in day_report.tasks:
         print(f'Looking for {task.description}...')
-        entry = ts.find_entry_by(task.workorder, task.activity, task.description)
+        entry = ts.find_draft_entry_by(task.workorder, task.activity, task.description)
         if entry:
             print('\tFound a matching entry')
             entry.select()
