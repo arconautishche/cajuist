@@ -8,6 +8,7 @@ class Entry:
     '''
     Allows interacting with a single Timesheet Entry row
     '''
+    STATUS_INDEX = 4
     TIMECODE_INDEX = 5
     WORKORDER_INDEX = 6
     ACTIVITY_INDEX = 7
@@ -17,6 +18,9 @@ class Entry:
         self.browser = browser
         self.entry_tr = entry_tr
         self.entry_id = self.entry_tr.get_attribute('id')
+
+    def get_status(self):
+        return self.__get_entry_attribute(Entry.STATUS_INDEX)
 
     def get_timecode(self):
         return self.__get_entry_attribute(Entry.TIMECODE_INDEX)

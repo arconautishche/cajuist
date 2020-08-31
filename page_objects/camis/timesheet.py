@@ -21,7 +21,7 @@ class Timesheet(object):
         self.browser.implicitly_wait(2)
 
         self.__switch_to_ts_frame()
-        self.__read_existing_entries()
+        self.__read_all_existing_entries()
 
     def close(self):
         self.browser.quit()
@@ -35,8 +35,8 @@ class Timesheet(object):
         new_entry = Entry.get_all_entries(self.browser)[-1]
         return new_entry
 
-    def find_entry_by(self, workorder: str, activity: str, description: str) -> Entry:
-        from_existing_entries = self.__get_existing_entry(workorder, activity, description)
+    def find_draft_entry_by(self, workorder: str, activity: str, description: str) -> Entry:
+        from_existing_entries = self.__get_existing_entry("Draft", workorder, activity, description)
         return from_existing_entries
 
     def save(self):
@@ -56,24 +56,25 @@ class Timesheet(object):
             EC.frame_to_be_available_and_switch_to_it((By.CSS_SELECTOR, 'frame'))
         )
 
-    def __read_existing_entries(self):
-        print('Reading existing entries...')
+    def __read_all_existing_entries(self):
+        print('Reading all existing entries...')
         self.existing_entries = {}
 
         entries = Entry.get_all_entries(self.browser)
         for entry in entries:
             entry_attributes = (
+                entry.get_status(),
                 entry.get_workorder(), 
                 entry.get_activity(), 
                 entry.get_description()
             )
             self.existing_entries[entry_attributes] = entry        
 
-    def __get_existing_entry(self, workorder: str, activity: str, description: str) -> Entry:
+    def __get_existing_entry(self, status: str, workorder: str, activity: str, description: str) -> Entry:
         if not self.existing_entries:
             return None
 
-        entry_attributes = (workorder, activity, description)
+        entry_attributes = (status, workorder, activity, description)
         if entry_attributes in self.existing_entries.keys():
             return self.existing_entries[entry_attributes]
 
