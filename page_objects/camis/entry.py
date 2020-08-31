@@ -4,9 +4,10 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.remote.webdriver import WebDriver
 from selenium.webdriver.remote.webelement import WebElement
 
+
 class Entry:
     '''
-    Allows interacting with a single Timesheet Entry row
+    Allows interacting with a Timesheet Entry rows
     '''
     STATUS_INDEX = 4
     TIMECODE_INDEX = 5
@@ -48,7 +49,10 @@ class Entry:
 
     def select(self):
         refreshed_elem = self.__fresh()
-        self.browser.execute_script("arguments[0].scrollIntoView();", refreshed_elem) # sometimes the row may be out of view
+
+        # sometimes the row may be out of view
+        self.browser.execute_script("arguments[0].scrollIntoView();", refreshed_elem)
+        
         refreshed_elem.click()
         time.sleep(1)
 
@@ -56,7 +60,10 @@ class Entry:
     def get_all_entries(browser: WebDriver):
         container = Entry.__container(browser)
         entries = list(
-            [Entry(browser, tr) for tr in container.find_elements_by_xpath('tbody/tr')[:-2]]
+            map(
+                lambda tr: Entry(browser, tr),
+                container.find_elements_by_xpath('tbody/tr')[:-2]
+            )
         )
 
         return entries
@@ -73,9 +80,6 @@ class Entry:
         entry_tr = container.find_element_by_id(self.entry_id)
 
         return entry_tr
-
-    #XPATH_TO_INPUT = '//tbody/tr[1]/td[1]//input[1]'
-    #XPATH_TO_TEXT = '/div[1][not(*)]'
 
     def __find_text(self, cell_index: int):
         xpath = f'td[{cell_index}]/div[1][not(*)]'
