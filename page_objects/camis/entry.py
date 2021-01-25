@@ -1,4 +1,7 @@
 import time
+import locale
+
+from datetime import datetime
 
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.remote.webdriver import WebDriver
@@ -110,14 +113,14 @@ class Entry:
         attribute_input.send_keys(Keys.TAB)
         time.sleep(1)
 
-    def __set_entry_hours(self, cell_index: int, value: str):
+    def __set_entry_hours(self, cell_index: int, value: float):
         hour_input = self.__find_input(cell_index)
         hour_input.click()
 
         hour_input.send_keys(Keys.CONTROL + 'a')
         hour_input.send_keys(Keys.DELETE)
 
-        hour_input.send_keys(str(value))
+        hour_input.send_keys(locale.str(value))
         hour_input.send_keys(Keys.TAB)
         time.sleep(1)
 
@@ -128,3 +131,7 @@ class Entry:
             return True
         except:
             return False
+
+    def screenshot(self, label: str = ""):
+        timestamp = datetime.now().strftime("%Y%m%d-%H%M%S%f")
+        self.browser.save_screenshot(f"C:\\Users\\antoniar\\Desktop\\scr\\schreenshot-{timestamp}{label}.png")

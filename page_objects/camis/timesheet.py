@@ -1,22 +1,35 @@
 import os
+import locale
+import time
+
+from datetime import datetime
 
 from dotenv import load_dotenv
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.chrome.options import Options
 
 from page_objects.camis.entry import Entry
 
 class Timesheet(object):
-    def __init__(self):
+    def __init__(self, headless: bool):
         print('-- 🐢 OPENING UP CAMIS 🐢 --')
+        print(f'    Headless: {headless}')
 
         load_dotenv()
         login = os.getenv('CAMIS_LOGIN')
         pwd = os.getenv('CAMIS_PASSWORD')
 
-        self.browser = webdriver.Chrome('selenium_drivers\\chromedriver.exe')
+        chrome_options = Options()
+
+        if (headless):
+            chrome_options.add_argument("--headless")
+            chrome_options.add_argument("--window-size=1920x1080")
+            locale.setlocale(locale.LC_ALL, 'nl_BE')
+        
+        self.browser = webdriver.Chrome('selenium_drivers\\chromedriver.exe', options=chrome_options)
         self.browser.get(f'https://{login}:{pwd}@camis.cegeka.com/agresso')
         self.browser.implicitly_wait(2)
 
@@ -33,6 +46,7 @@ class Timesheet(object):
         add_btn.click()
 
         new_entry = Entry.get_all_entries(self.browser)[-1]
+
         return new_entry
 
     def find_draft_entry_by(self, workorder: str, activity: str, description: str) -> Entry:
@@ -40,10 +54,11 @@ class Timesheet(object):
         return from_existing_entries
 
     def save(self):
-        #SAVE_BTN_SELECTOR = '#b\\$tblsysSave'
-        #save_btn = browser.find_element_by_css_selector(SAVE_BTN_SELECTOR)
-        #save_btn.click()
-        pass
+        save_btn_selector = '#b\\$tblsysSave'
+        save_btn = self.browser.find_element_by_css_selector(save_btn_selector)
+        save_btn.click()
+
+        self.__wait_for_success_popup()
 
     ### PRIVATE ###
     def __switch_to_ts_frame(self):
@@ -79,3 +94,10 @@ class Timesheet(object):
             return self.existing_entries[entry_attributes]
 
         return None
+
+    def __wait_for_success_popup(self):
+        time.sleep(5)
+        # this doesn't seem to work...
+        # WebDriverWait(self.browser, 30).until(
+        #    EC.visibility_of_element_located((By.CSS_SELECTOR, 'div.u4-messageoverlay-success'))
+        #)
