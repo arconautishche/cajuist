@@ -29,10 +29,9 @@ You can use an existing script or write your own that will perform the simple 3 
     ``` shell
     > pip install -r requirements.txt
     ```
-- Create a file called .env and put your CAMIS credentials in there, like this:
+- Create a file called .env and put your Cegeka AD login in there, like this:
     ```
-    CAMIS_LOGIN='your_cegeka_AD_login'
-    CAMIS_PASSWORD='your_very_secret_password'
+    AD_LOGIN='firstname.lastname@cegeka.com'
     ```
 - Write your own script or use an existing one if it matches your needs
 
