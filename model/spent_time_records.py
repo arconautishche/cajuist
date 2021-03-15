@@ -55,4 +55,8 @@ class WorkedDay:
             task.hours = round(task.hours * 4) / 4
 
     def total_hours(self):
-        return sum(task.hours for task in self.tasks)
+        total_hours = sum(task.hours for task in self.tasks)
+        if (total_hours < 0):
+            raise Exception(f'Total hours {total_hours} < 0')
+
+        return total_hours

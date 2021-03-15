@@ -51,6 +51,9 @@ def __tasks_from_toggl_entries(toggl_time_entries_json):
             hours = __extract_duration(toggl_entry)
         )
 
+        if new_task['hours'] < 0:
+            raise Exception(f'Toggle task "{new_task["description"]}" has negative hours, still running?')
+
         matching_task = next((t for t in tasks if __matching_task(t, new_task)), None)
         if matching_task:
             matching_task['hours'] += new_task['hours']
