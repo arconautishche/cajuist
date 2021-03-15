@@ -24,10 +24,7 @@ class Timesheet(object):
 
         chrome_options = Options()
 
-        if (headless):
-            chrome_options.add_argument("--headless")
-            chrome_options.add_argument("--window-size=1920x1080")
-            locale.setlocale(locale.LC_ALL, 'nl_BE')
+        self.__set_headless_options(chrome_options, headless)
         
         self.browser = webdriver.Chrome('selenium_drivers\\chromedriver.exe', options=chrome_options)
         self.browser.get(f'https://{login}:{pwd}@camis.cegeka.com/agresso')
@@ -101,3 +98,12 @@ class Timesheet(object):
         # WebDriverWait(self.browser, 30).until(
         #    EC.visibility_of_element_located((By.CSS_SELECTOR, 'div.u4-messageoverlay-success'))
         #)
+
+    def __set_headless_options(self, chrome_options: Options, headless: bool):
+        return
+        
+        # DOESN'T REALLY WORK YET
+        if (headless):
+            chrome_options.add_argument("--headless")
+            chrome_options.add_argument("--window-size=1920x1080")
+            locale.setlocale(locale.LC_ALL, 'nl_BE')
