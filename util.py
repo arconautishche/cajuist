@@ -14,7 +14,7 @@ def fill_camis(day_report: WorkedDay, ts: Timesheet, target_date: date):
             print('\tFound a matching entry')
             entry.select()
         else:
-            print('\tCreate a new entry')
+            print('\tCreating a new entry')
             entry = ts.add_new_entry()
             entry.set_workorder(task.workorder)
             entry.set_activity(task.activity)

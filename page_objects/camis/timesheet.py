@@ -3,8 +3,8 @@ import locale
 import time
 
 from datetime import datetime
-
 from dotenv import load_dotenv
+
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
@@ -12,29 +12,35 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.chrome.options import Options
 
 from page_objects.camis.entry import Entry
+from page_objects.camis.ms_signin import MsSignin
 
 class Timesheet(object):
     def __init__(self, headless: bool):
         print('-- 🐢 OPENING UP CAMIS 🐢 --')
-        print(f'    Headless: {headless}')
+        print(f'\tHeadless: {headless}')
 
         load_dotenv()
-        login = os.getenv('CAMIS_LOGIN')
-        pwd = os.getenv('CAMIS_PASSWORD')
-
         chrome_options = Options()
 
         self.__set_headless_options(chrome_options, headless)
         
         self.browser = webdriver.Chrome('selenium_drivers\\chromedriver.exe', options=chrome_options)
-        self.browser.get(f'https://{login}:{pwd}@camis.cegeka.com/agresso')
+        self.browser.get('https://camis.cegeka.com/agresso')
         self.browser.implicitly_wait(2)
+
+        self.__sign_in()
 
         self.__switch_to_ts_frame()
         self.__read_all_existing_entries()
 
     def close(self):
         self.browser.quit()
+
+    def __sign_in(self):
+        ms_signin = MsSignin(self.browser)
+        if (ms_signin.is_visible()):
+            ms_signin.start_login(os.getenv('AD_LOGIN'))
+            print('\tApprove sign-in!')
 
     def add_new_entry(self):
         add_btn_selector = '#b_s89_g89s90_buttons__newButton'
