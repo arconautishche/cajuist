@@ -21,7 +21,7 @@ def load_time_entries(entries_day: date):
         }
 
     r = requests.get(
-        'https://www.toggl.com/api/v8/time_entries',
+        'https://api.toggl.com/api/v8/time_entries',
         auth=(api_token, 'api_token'),
         params=dates
         )
@@ -34,7 +34,7 @@ def load_time_entries(entries_day: date):
 def __load_projects():
     workspace_id = 3405699 # TODO: safe for personal use, but not really nice
     r = requests.get(
-        f'https://www.toggl.com/api/v8/workspaces/{workspace_id}/projects',
+        f'https://api.toggl.com/api/v8/workspaces/{workspace_id}/projects',
         auth=(api_token, 'api_token')
         )
 
