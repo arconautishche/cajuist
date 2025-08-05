@@ -23,6 +23,14 @@ def fill_camis(day_report: WorkedDay, ts: Timesheet, target_date: date):
         print('\tSetting hours')
         entry.set_hours(day_of_week, task.hours)
 
+    errors = entry.get_errors()
+    if errors:
+        print(f'\tErrors: {errors}')
+        print('\tPlease fix the errors and try again')
+        
+    return errors
+
+
 def should_go_headless(day_report: WorkedDay, target_date: date):
     return \
         (day_report.total_hours() == 8) and \

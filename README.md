@@ -6,6 +6,7 @@ This code can auto-fill your Cegeka CAMIS timesheets based on data provided from
 ## Currently available integrations:
 - Toggl
 - CSV-file
+- API
 
 [See more details on usage](data_providers/README.md)
 
@@ -32,6 +33,8 @@ You can use an existing script or write your own that will perform the simple 3 
 - Create a file called .env and put your Cegeka AD login in there, like this:
     ```
     AD_LOGIN='firstname.lastname@cegeka.com'
+    AD_PASSWORD='xxxxx' (optional)
+    TOTP_SECRET='xxxxx' (optional)
     ```
 - Write your own script or use an existing one if it matches your needs
 
@@ -46,3 +49,29 @@ An example of such a script is [toggl_to_camis.py](toggl_to_camis.py), which per
     IT DOESN'T SAVE AUTOMATICALLY THOUGH (that's on purpose to let you review the entries before clicking Save)
 
 
+
+## Running the API
+
+### Development Mode
+```bash
+python camis_api.py
+```
+
+### Production Mode
+```bash
+uvicorn camis_api:app --host 0.0.0.0 --port 8000
+```
+
+The API will be available at `http://localhost:8000`
+
+## API Documentation
+
+Once running, visit `http://localhost:8000/docs` for interactive API documentation.
+
+## Endpoints
+
+### Health Check
+- **GET** `/health` - Check API status
+
+### Fill Timesheet
+- **POST** `/fill-timesheet` - Fill CAMIS timesheet with entries

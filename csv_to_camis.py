@@ -15,7 +15,13 @@ day_report = WorkedDay(csv.read_entries(), caption_processor=VentourisProcessor(
 print(f'∑ Total registered hours: {day_report.total_hours()}\n')
 
 ts = Timesheet()
-util.fill_camis(day_report, ts, day_of_week)
+errors = util.fill_camis(day_report, ts, target_date)
+if not errors:
+    print('No errors found')
+else:
+    print(f'Errors: {errors}')
+    print('Please fix the errors and try again')
+    quit(1)
 
 print('=' * 50)
 print('Done! Check if everything is ok and then Save')
